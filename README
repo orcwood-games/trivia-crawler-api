@@ -1,0 +1,5 @@
+Coding Standard: https://docs.google.com/document/d/1OeIEqBp7ldthTeea55OqlWJDGuVjzkuVn9GQdPDbn1U
+
+Getting Started:
+1. Run: npm i
+2. Test your setup with the test.http file
