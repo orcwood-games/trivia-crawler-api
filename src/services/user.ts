@@ -4,9 +4,13 @@ import UserModel from "../models/user";
 class User {
 	async login(user:UserModel):Promise<UserModel>{
 		return new Promise((resolve, reject) => {
-			db.query(`CALL sp_login(?,?)`, [user.steamId, user.displayName], (error, results:any) => {
+			db.query(`CALL sp_login(?)`, [user.steamId], (error, results:any) => {
 				if(error) return reject(error);
-				resolve(new UserModel(results[0][0]));
+				if(results[0]?.length){
+					resolve(new UserModel(results[0][0]));
+				}else{
+					reject({message: "Failed to get user data"});
+				}
 			});
 		});
 	}

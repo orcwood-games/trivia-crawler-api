@@ -5,17 +5,16 @@ import SteamService from "../services/steam";
 
 export const login = async (req:Request, res:Response) => {
   const steamId = req.body.steamId;
-  const displayName = req.body.displayName;
-  const sessionTicket = req.body.sessionTicket;
+  //const sessionTicket = req.body.sessionTicket;
 
-  const verified = await verifySteamId(steamId, displayName, sessionTicket).catch((error) => {
+  /*const verified = await verifySteamId(steamId, displayName, sessionTicket).catch((error) => {
     console.error(error);
   });
 
   if(!verified) return res.status(403).json({message: "Invalid request, expected request body: {steamId:number, displayName:string}"});
+  */
   
-  
-  const user = await UserService.login({steamId:steamId, displayName:displayName}).catch((error:any) => {
+  const user = await UserService.login({steamId:steamId}).catch((error:any) => {
     console.error(error);
   });
 
