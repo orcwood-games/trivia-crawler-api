@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 import { encodeToken } from "../helpers/auth";
 import UserService from "../services/user";
 import SteamService from "../services/steam";
+import SessionService from "../services/session";
 
 export const login = async (req:Request, res:Response) => {
   const steamId = req.body.steamId;
@@ -20,11 +21,18 @@ export const login = async (req:Request, res:Response) => {
 
   if(!user) return res.status(500).json({message: "Unable to create user"});
 
+  const session = await SessionService.new(user).catch((error) => {
+    console.error(error);
+  });
+
+  if(!session) return res.status(500).json({message: "Unable to session user"});
+
   const token = encodeToken(user);
 
   const response = {
     accessToken: token,
-    user: user
+    user: user,
+    code: session.code
   }
 
   return res.json(response);
